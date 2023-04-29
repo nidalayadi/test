@@ -21,19 +21,23 @@ import curved9 from "assets/images/curved-images/curved-6.jpg";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e) => {
+    e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3000/v1/login', {
-        userName,
-        password,
+      console.log(userName, password);
+      const response = await axios.post("http://localhost:3333", {
+        emailOrUsername: userName,
+        password: password,
       });
+      console.log(response.data);
       // handle response here
     } catch (error) {
       // handle error here
+      console.log(error);
     }
   };
 
@@ -50,9 +54,12 @@ function SignIn() {
               User Name
             </SoftTypography>
           </SoftBox>
-          <SoftInput placeholder="userName" onChange={(e) => {
-            setUserName(e.target.value)
-          }}/>
+          <SoftInput
+            placeholder="userName"
+            onChange={(e) => {
+              setUserName(e.target.value);
+            }}
+          />
         </SoftBox>
         <SoftBox mb={2}>
           <SoftBox mb={1} ml={0.5}>
@@ -60,9 +67,13 @@ function SignIn() {
               Password
             </SoftTypography>
           </SoftBox>
-          <SoftInput type="password" placeholder="Password" onChange={(e) => {
-            setPassword(e.target.value)
-          }}/>
+          <SoftInput
+            type="password"
+            placeholder="Password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
         </SoftBox>
         <SoftBox display="flex" alignItems="center">
           <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -76,7 +87,13 @@ function SignIn() {
           </SoftTypography>
         </SoftBox>
         <SoftBox mt={4} mb={1}>
-          <SoftButton variant="gradient" color="info" fullWidth type="submit" onClick={handleSignIn}>
+          <SoftButton
+            variant="gradient"
+            color="info"
+            fullWidth
+            type="submit"
+            onClick={(e) => handleSignIn(e)}
+          >
             sign in
           </SoftButton>
         </SoftBox>
