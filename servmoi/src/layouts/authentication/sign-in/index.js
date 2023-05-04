@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 // react-router-dom components
 import { Link } from "react-router-dom";
 
@@ -23,7 +23,9 @@ function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -38,6 +40,7 @@ function SignIn() {
         
       }
       // handle response here
+      navigate("/dashboard");
     } catch (error) {
       // handle error here
       console.log(error);

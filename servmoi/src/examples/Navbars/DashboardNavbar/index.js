@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 // react-router components
 import { useLocation, Link } from "react-router-dom";
@@ -44,7 +45,8 @@ import team2 from "assets/images/team-2.jpg";
 import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 
 function DashboardNavbar({ absolute, light, isMini }) {
-  const solde = 200;
+  const [solde, setSolde] = useState(null);
+
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
@@ -58,6 +60,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
     } else {
       setNavbarType("static");
     }
+    axios.get("http://localhost:3333/api/v1/getBalance/me").then((response) => {
+    setSolde(response.data.solde);
+  });
 
     // A function that sets the transparent state of the navbar.
     function handleTransparentNavbar() {
@@ -136,13 +141,13 @@ function DashboardNavbar({ absolute, light, isMini }) {
             <SoftBox pr={1}>
             <Link to="/billing">
             <SoftButton variant="gradient" color="dark" fullWidth >
-          {solde} SERVs
-          <IconButton size="small" color="white" >
-                  <Icon color="white">
-                    add
-                  </Icon>
-                  </IconButton>
-        </SoftButton>
+  {solde === null ? "Loading..." : `${solde} SERVs`}
+  <IconButton size="small" color="white" >
+    <Icon color="white">
+      add
+    </Icon>
+  </IconButton>
+</SoftButton>
         </Link>
             </SoftBox>
             <SoftBox color={light ? "white" : "inherit"}>
