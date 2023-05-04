@@ -29,11 +29,14 @@ function SignIn() {
     e.preventDefault();
     try {
       console.log(userName, password);
-      const response = await axios.post("http://localhost:3333", {
+      const response = await axios.post("http://localhost:3333/api/v1/login", {
         emailOrUsername: userName,
         password: password,
       });
       console.log(response.data);
+      if(response.data == "booom"){
+        
+      }
       // handle response here
     } catch (error) {
       // handle error here

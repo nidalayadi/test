@@ -37,7 +37,7 @@ import BuildByDevelopers from "layouts/dashboard/components/BuildByDevelopers";
 import WorkWithTheRockets from "layouts/dashboard/components/WorkWithTheRockets";
 import Projects from "layouts/dashboard/components/Projects";
 import OrderOverview from "layouts/dashboard/components/OrderOverview";
-
+import axios from "axios";
 // Data
 import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 import gradientLineChartData from "layouts/dashboard/data/gradientLineChartData";
@@ -51,6 +51,24 @@ function Dashboard() {
   const soldeSpent = 123.35;
   const profits = 0; 
 
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      console.log(userName, password);
+      const response = await axios.get("http://localhost:3333/api/v1/getBalance/me", {
+       
+      });
+      console.log(response.data);
+      if(response.data == "booom"){
+        
+      }
+      // handle response here
+    } catch (error) {
+      // handle error here
+      console.log(error);
+    }
+  };
+  handleSignIn();
   return (
     <DashboardLayout>
       <DashboardNavbar />
