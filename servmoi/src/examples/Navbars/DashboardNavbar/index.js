@@ -61,7 +61,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
       setNavbarType("static");
     }
     axios.get("http://localhost:3333/api/v1/getBalance/me").then((response) => {
-    setSolde(response.data.solde);
+    setSolde(response.data.coinBalance);
   });
 
     // A function that sets the transparent state of the navbar.

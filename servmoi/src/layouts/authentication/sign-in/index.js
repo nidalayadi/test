@@ -31,16 +31,28 @@ function SignIn() {
     e.preventDefault();
     try {
       console.log(userName, password);
-      const response = await axios.post("http://localhost:3333/api/v1/login", {
-        emailOrUsername: userName,
-        password: password,
-      });
-      console.log(response.data);
-      if(response.data == "booom"){
-        
-      }
+      const response  = await fetch("http://localhost:3333/api/v1/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          emailOrUsername: userName,
+          password: password
+        })
+      })
+      .then(response => response.json())
+      .then(data => {console.log(data)
+        if(data.result === true){
+          navigate("/dashboard");
+        }
+      })
+      .catch(error => console.error(error));
+      
+      
       // handle response here
-      navigate("/dashboard");
+     
     } catch (error) {
       // handle error here
       console.log(error);

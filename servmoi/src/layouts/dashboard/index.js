@@ -51,24 +51,7 @@ function Dashboard() {
   const soldeSpent = 123.35;
   const profits = 0; 
 
-  const handleSignIn = async (e) => {
-    e.preventDefault();
-    try {
-      console.log(userName, password);
-      const response = await axios.get("http://localhost:3333/api/v1/getBalance/me", {
-       
-      });
-      console.log(response.data);
-      if(response.data == "booom"){
-        
-      }
-      // handle response here
-    } catch (error) {
-      // handle error here
-      console.log(error);
-    }
-  };
-  handleSignIn();
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
