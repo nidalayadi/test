@@ -60,9 +60,14 @@ function DashboardNavbar({ absolute, light, isMini }) {
     } else {
       setNavbarType("static");
     }
-    axios.get("http://localhost:3333/api/v1/getBalance/me").then((response) => {
-    setSolde(response.data.coinBalance);
-  });
+    axios
+      .get("http://localhost:3333/api/v1/getBalance/me", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response);
+        setSolde(response.data.coinBalance);
+      });
 
     // A function that sets the transparent state of the navbar.
     function handleTransparentNavbar() {
@@ -139,19 +144,17 @@ function DashboardNavbar({ absolute, light, isMini }) {
         {isMini ? null : (
           <SoftBox sx={(theme) => navbarRow(theme, { isMini })}>
             <SoftBox pr={1}>
-            <Link to="/billing">
-            <SoftButton variant="gradient" color="dark" fullWidth >
-  {solde === null ? "Loading..." : `${solde} SERVs`}
-  <IconButton size="small" color="white" >
-    <Icon color="white">
-      add
-    </Icon>
-  </IconButton>
-</SoftButton>
-        </Link>
+              <Link to="/billing">
+                <SoftButton variant="gradient" color="dark" fullWidth>
+                  {solde === null ? "Loading..." : `${solde} SERVs`}
+                  <IconButton size="small" color="white">
+                    <Icon color="white">add</Icon>
+                  </IconButton>
+                </SoftButton>
+              </Link>
             </SoftBox>
             <SoftBox color={light ? "white" : "inherit"}>
-            <IconButton
+              <IconButton
                 size="small"
                 color="inherit"
                 sx={navbarIconButton}
@@ -191,7 +194,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
-              
+
               {/* <IconButton
                 size="small"
                 color="inherit"
@@ -200,7 +203,6 @@ function DashboardNavbar({ absolute, light, isMini }) {
               >
                 <Icon>settings</Icon>
               </IconButton> */}
-              
             </SoftBox>
           </SoftBox>
         )}
