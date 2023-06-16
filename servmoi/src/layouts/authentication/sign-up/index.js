@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from 'axios';
+import axios from "axios";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -23,29 +23,34 @@ import Separator from "layouts/authentication/components/Separator";
 import curved6 from "assets/images/curved-images/curved14.jpg";
 
 function SignUp() {
-  
   const [agreement, setAgremment] = useState(true);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [userName, setUserName] = useState('');
-  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [userName, setUserName] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, seterrorMessage] = useState("");
   const handleSetAgremment = () => setAgremment(!agreement);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    axios.post('https://d93e-197-118-138-25.ngrok-free.app/api/v1/register', {
+    const body = {
       firstName: firstName,
       lastName: lastName,
-      fisrtName: firstName,
+      userName: userName,
       email: email,
-      password: password
-    })
-      .then(response => {
+      password: password,
+    };
+    console.log(body);
+    axios
+      .post(`https://8c0f-105-107-214-103.ngrok-free.app/api/v1/register`, body)
+      .then((response) => {
+        seterrorMessage("");
         console.log(response.data);
       })
-      .catch(error => {
-        console.log(error);
+      .catch((error) => {
+        seterrorMessage(error.response.data.message);
+        console.log(error.response.data);
       });
   };
 
@@ -66,31 +71,53 @@ function SignUp() {
         </SoftBox>
         <Separator />
         <SoftBox pt={2} pb={3} px={3}>
-          <SoftBox component="form" role="form" >
+          <SoftBox component="form" role="form">
             <SoftBox mb={2}>
-              <SoftInput placeholder="First Name" onChange={(e) => {
-                setFirstName(e.target.value)
-              }}/>
+              <SoftTypography component="a" href="#" variant="button" fontWeight="bold">
+                <p style={{ color: "red" }}>{errorMessage}</p>
+              </SoftTypography>
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput placeholder="Last Name" onChange={(e) => {
-                setLastName(e.target.value)
-              }}/>
+              <SoftInput
+                placeholder="First Name"
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
+              />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="email" placeholder="Email" onChange={(e) => {
-                setEmail(e.target.value)
-              }}/>
+              <SoftInput
+                placeholder="Last Name"
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
+              />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput placeholder="User Name" onChange={(e) => {
-                setUserName(e.target.value)
-              }}/>
+              <SoftInput
+                type="email"
+                placeholder="Email"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+              />
             </SoftBox>
             <SoftBox mb={2}>
-              <SoftInput type="password" placeholder="Password" onChange={(e) => {
-                setPassword(e.target.value)
-              }}/>
+              <SoftInput
+                placeholder="User Name"
+                onChange={(e) => {
+                  setUserName(e.target.value);
+                }}
+              />
+            </SoftBox>
+            <SoftBox mb={2}>
+              <SoftInput
+                type="password"
+                placeholder="Password"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
             </SoftBox>
             <SoftBox display="flex" alignItems="center">
               <Checkbox checked={agreement} onChange={handleSetAgremment} />
@@ -113,7 +140,13 @@ function SignUp() {
               </SoftTypography>
             </SoftBox>
             <SoftBox mt={4} mb={1}>
-              <SoftButton variant="gradient" color="dark" fullWidth type="submit" onClick={handleSubmit}>
+              <SoftButton
+                variant="gradient"
+                color="dark"
+                fullWidth
+                type="submit"
+                onClick={handleSubmit}
+              >
                 sign up
               </SoftButton>
             </SoftBox>
