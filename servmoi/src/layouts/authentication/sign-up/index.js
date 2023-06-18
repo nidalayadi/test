@@ -43,7 +43,7 @@ function SignUp() {
     };
     console.log(body);
     axios
-      .post(`https://8c0f-105-107-214-103.ngrok-free.app/api/v1/register`, body)
+      .post(`https://e4a1-105-109-37-110.ngrok-free.app/api/v1/register`, body)
       .then((response) => {
         seterrorMessage("");
         console.log(response.data);
